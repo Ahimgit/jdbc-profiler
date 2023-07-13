@@ -61,7 +61,7 @@ limit [?=6]
 
 ## Profiler
 Profiler - a thread-local profiler that utilizes metrics collected by the Proxy Driver,
-generates **jdbc-profiler.log** that that shows stack depth, timings, jdbc timings and number of jdbc calls between push() & pop().
+generates **jdbc-profiler.log** that shows stack depth, execution & jdbc timings and number of calls between push() & pop().
 
 #### Usage
 ##### Directly using calling Profiler class methods:
