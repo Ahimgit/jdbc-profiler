@@ -4,13 +4,29 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
+    <groupId>org.ard</groupId>
     <artifactId>jdbc-profiler</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- provided -->
+        <version.slf4j-api>2.0.5</version.slf4j-api>
+
+        <!-- test -->
+        <version.junit-jupiter>5.9.2</version.junit-jupiter>
+        <version.mockito-core>5.4.0</version.mockito-core>
+        <version.h2>2.1.214</version.h2>
+        <version.spring-boot-starter-test>3.1.0</version.spring-boot-starter-test>
+        <version.spring-jdbc>6.0.6</version.spring-jdbc>
+        <version.spring-aop>6.0.6</version.spring-aop>
+        <version.aspectjweaver>1.9.19</version.aspectjweaver>
+
+        <!-- maven -->
+        <version.maven-surefire-plugin>2.22.0</version.maven-surefire-plugin>
     </properties>
 
     <dependencies>
@@ -18,51 +34,51 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>2.0.5</version>
+            <version>${version.slf4j-api}</version>
             <scope>provided</scope>
         </dependency>
 
-        <!-- tests -->
+        <!-- test -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.9.2</version>
+            <version>${version.junit-jupiter}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>5.4.0</version>
+            <version>${version.mockito-core}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>2.1.214</version>
+            <version>${version.h2}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>3.1.0</version>
+            <version>${version.spring-boot-starter-test}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
-            <version>6.0.6</version>
+            <version>${version.spring-aop}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
-            <version>1.9.19</version>
+            <version>${version.aspectjweaver}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
-            <version>6.0.6</version>
+            <version>${version.spring-jdbc}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -71,17 +87,8 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
-                <configuration>
-                    <source>8</source>
-                    <target>8</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.0</version>
+                <version>${version.maven-surefire-plugin}</version>
             </plugin>
         </plugins>
     </build>

@@ -38,7 +38,6 @@ public class ProxyFactory {
         return (PreparedStatement) Proxy.newProxyInstance(source.getClass().getClassLoader(),
                 new Class[]{PreparedStatement.class},
                 new ProxyInvocationHandlerStatement(source, sql, this, statsInfo, getLogger()));
-
     }
 
     public Statement getStatementProxy(final Statement source) {

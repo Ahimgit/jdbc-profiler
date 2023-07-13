@@ -61,7 +61,7 @@ public class Profiler {
             init();
             stackTL.get().push(new StackItem(System.currentTimeMillis(), getCurrentJdbcStats()));
         } catch (final Exception e) {
-            logger.error("Error at push()", e);
+            logError("Error at push()", e);
         }
     }
 
@@ -97,7 +97,7 @@ public class Profiler {
                 }
             }
         } catch (final Exception e) {
-            logger.error("Error at pop()", e);
+            logError("Error at pop()", e);
         }
     }
 
@@ -110,12 +110,25 @@ public class Profiler {
                     .append(StatsUtil.statsToString(callStats.get()))
                     .append("==================================================\n").toString());
         } catch (final Exception e) {
-            logger.error("Error at statsTotal()", e);
+            logError("Error at statsTotal()", e);
         }
+    }
+
+    static void reset() {
+        stackTL.remove();
+        callStats.remove();
+        driver = null;
+        init();
     }
 
     private static Map<String, Map<String, Long>> getCurrentJdbcStats() {
         return StatsUtil.statsCopy(driver.getStats());
+    }
+
+    private static void logError(final String message, final Exception e) {
+        if (logger != null) {
+            logger.error(message, e);
+        }
     }
 
 }

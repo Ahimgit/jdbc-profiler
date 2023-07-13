@@ -14,7 +14,7 @@ import static org.ard.jdbc.profiler.driver.util.StringUtil.parseUrl;
 public class DriverConfiguration {
 
     private final LoggerFactory loggerFactory;
-    
+
     private volatile boolean initialized;
     private Driver realDriver;
     private String realURL;

@@ -1,9 +1,7 @@
 package org.ard.jdbc.profiler;
 
 import org.ard.jdbc.profiler.testutils.TestLoggerFactory.TestLogger;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,12 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.ard.jdbc.profiler.testutils.TestUtils.profile;
-import static org.ard.jdbc.profiler.testutils.TestUtils.runInThread;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertLinesMatch;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class ProfilerStandaloneFunctionalTest {
+public class ProfilerStandaloneFunctionalTest extends FunctionalTestBase {
 
     private Connection conn;
 
@@ -76,9 +73,9 @@ public class ProfilerStandaloneFunctionalTest {
         assertNull(TestLogger.getState("jdbc-profiler"));
     }
 
+
     @Test
     public void testTotalsWithProfiler() throws Throwable {
-        runInThread(() -> { // separate thread to have clean thread locals with stats
             profile("profiler_create", "create tbls", this::createTable);
             Profiler.statsTotal("profiler_everything", "prints everything");
 
@@ -102,27 +99,16 @@ public class ProfilerStandaloneFunctionalTest {
                     "==================================================\\n"
             );
             assertLinesMatch(profLog, TestLogger.getState("jdbc-profiler"));
-        });
     }
 
-    @BeforeAll
-    public static void before() {
-        System.setProperty("jdbc_proxy_logger", "org.ard.jdbc.profiler.testutils.TestLoggerFactory");
-    }
-
-    @AfterAll
-    public static void after() {
-        System.clearProperty("jdbc_proxy_logger");
-    }
 
     @BeforeEach
     public void beforeEach() throws Exception {
-        TestLogger.reset();
         conn = DriverManager.getConnection("proxy:jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "", "");
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void afterEach() throws Exception {
         conn.close();
     }
 

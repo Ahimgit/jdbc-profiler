@@ -2,6 +2,10 @@ package org.ard.jdbc.profiler.testutils;
 
 import org.ard.jdbc.profiler.Profiler;
 
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.util.Enumeration;
+
 public class TestUtils {
 
     public interface Block {
@@ -35,20 +39,17 @@ public class TestUtils {
         }
     }
 
-    public static void runInThread(final Block code) throws Throwable {
-        final Throwable[] th = new Throwable[1];
-        final Thread t = new Thread(() -> {
-            try {
-                code.run();
-            } catch (final Throwable the) {
-                th[0] = the;
+    public static synchronized void reRegisterDriver() throws Exception {
+        withSystemProperty("jdbc_proxy_logger", "org.ard.jdbc.profiler.testutils.TestLoggerFactory", () -> {
+            final Enumeration<Driver> drivers = DriverManager.getDrivers();
+            while (drivers.hasMoreElements()) {
+                final Driver driver = drivers.nextElement();
+                if (driver instanceof org.ard.jdbc.profiler.driver.Driver) {
+                    DriverManager.deregisterDriver(driver);
+                }
             }
+            DriverManager.registerDriver(new org.ard.jdbc.profiler.driver.Driver());
         });
-        t.start();
-        t.join();
-        if (th[0] != null) {
-            throw th[0];
-        }
     }
 
 }
