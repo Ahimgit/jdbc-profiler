@@ -13,7 +13,7 @@ Driver that proxies a real JDBC driver collects statistics for calls and outputs
 
 #### Configuration
  - requires at least Java 8 at runtime
-
+ - requires at least Java 11 to build
  - build jar with maven `mvn clean install`
  - place jdbc-profiler.jar onto monitored application classpath
  - change jdbc url to `proxy:class=original_real_driver_class|original_real_jdbc_url`
